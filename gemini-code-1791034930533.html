@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahmoud Embaby | Data Analyst & Business Intelligence Specialist</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    .cyber-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cyber-card:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.25);
+    }
+    #matrix-canvas {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.12;
+    }
+    #light-ribbon-canvas {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body class="bg-[#070a12] text-[#f8fafc] font-sans antialiased selection:bg-[#f59e0b]/30 selection:text-white relative overflow-x-hidden min-h-screen">
+
+  <!-- Interactive Data Matrix Rain & Light Ribbon Canvas -->
+  <canvas id="matrix-canvas"></canvas>
+  <canvas id="light-ribbon-canvas"></canvas>
+  <canvas id="particles-bg" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Glow Backdrops -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-1/3 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-[170px] pointer-events-none z-0"></div>
+
+  <!-- Page Content Container -->
+  <div class="relative z-10">
+
+    <!-- Top Floating Cyber Navbar -->
+    <nav class="sticky top-0 z-50 bg-[#070a12]/85 backdrop-blur-md border-b border-[#1e293b]">
+      <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <a href="#" class="text-lg font-mono font-extrabold tracking-wider text-[#f59e0b] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#f59e0b]"></span>
+          EMBABY.ANALYTICS
+        </a>
+        <div class="space-x-8 text-xs font-mono font-medium hidden md:flex items-center text-[#94a3b8]">
+          <a href="#about" class="hover:text-[#f59e0b] transition duration-200">// ABOUT</a>
+          <a href="#skills" class="hover:text-[#f59e0b] transition duration-200">// SKILLS</a>
+          <a href="#projects" class="hover:text-[#f59e0b] transition duration-200">// DASHBOARDS</a>
+          <a href="#education" class="hover:text-[#f59e0b] transition duration-200">// EDUCATION</a>
+        </div>
+        <a href="#contact" class="px-4 py-2 text-xs font-mono font-bold text-[#f59e0b] bg-[#451a03]/40 border border-[#b45309] rounded-lg hover:bg-[#b45309] hover:text-white transition duration-300">
+          LET'S_TALK()
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-7xl mx-auto px-8 pt-16 pb-20">
+      <div class="grid lg:grid-cols-12 gap-10 items-stretch">
+        
+        <!-- Left Side: Profile & Bio -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1 text-xs tracking-wider font-mono font-semibold text-[#fbbf24] bg-[#451a03]/40 border border-[#b45309]/50 rounded-md mb-6 w-fit">
+            <span class="w-2 h-2 rounded-full bg-[#fbbf24] animate-ping"></span>
+            DEPI_DATA_ANALYTICS_TRAINEE
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Mahmoud <span class="text-[#f59e0b]">Embaby</span>
+          </h1>
+          <p class="text-lg sm:text-xl text-[#94a3b8] mt-2 font-mono">
+            &gt; Data Analyst | Power BI, DAX & SQL Specialist
+          </p>
+
+          <p class="text-base text-[#cbd5e1] mt-6 leading-relaxed">
+            Computer Science student specializing in Data Analytics. I bridge the gap between complex raw data and business decisions using Power BI, Advanced Excel, Power Query, and SQL. Backed by strong C++ algorithmic logic and data modeling expertise.
+          </p>
+
+          <!-- Quick Stats Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-[#1e293b]">
+            <div class="cyber-card p-4 rounded-xl">
+              <span class="text-xs text-[#94a3b8] font-mono block">SPECIALIZATION</span>
+              <span class="text-sm font-bold font-mono text-[#f59e0b]">Power BI & DAX</span>
+            </div>
+            <div class="cyber-card p-4 rounded-xl">
+              <span class="text-xs text-[#94a3b8] font-mono block">TRAINING</span>
+              <span class="text-sm font-bold font-mono text-[#fbbf24]">DEPI Initiative</span>
+            </div>
+            <div class="cyber-card p-4 rounded-xl col-span-2 sm:col-span-1">
+              <span class="text-xs text-[#94a3b8] font-mono block">CREDENTIALS</span>
+              <span class="text-sm font-bold font-mono text-white">IBM & Oracle</span>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="#projects" class="px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-black font-mono font-bold text-sm rounded-lg transition shadow-lg shadow-amber-950/40">
+              VIEW_DASHBOARDS()
+            </a>
+            <a href="https://linkedin.com/in/mahmoud-embaby-b670393a4" target="_blank" class="px-6 py-3 cyber-card text-[#cbd5e1] font-mono font-medium text-sm rounded-lg transition">
+              LINKEDIN_PROFILE
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right Side: 3D Data Cube Interactive Element -->
+        <div class="lg:col-span-5 flex flex-col">
+          <div id="chart-container" class="relative w-full h-[380px] sm:h-full min-h-[380px] rounded-2xl bg-[#0b1120] border border-[#1e293b] shadow-2xl overflow-hidden flex flex-col justify-between cursor-grab active:cursor-grabbing">
+            <div class="bg-[#0f172a] px-4 py-3 border-b border-[#1e293b] flex items-center justify-between text-xs font-mono text-[#64748b]">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                <span class="ml-2 text-[#cbd5e1]">star_schema_model.dax</span>
+              </div>
+              <span class="text-[#f59e0b]">DATA CUBE 3D</span>
+            </div>
+            
+            <canvas id="cube3dCanvas" class="block w-full h-full"></canvas>
+
+            <div class="bg-[#0f172a]/90 px-4 py-2 border-t border-[#1e293b] text-[11px] font-mono flex justify-between text-[#94a3b8]">
+              <span>ETL Pipeline: <span class="text-green-400">ACTIVE</span></span>
+              <span>Drag to rotate 3D Data Model</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Professional Summary -->
+    <section id="about" class="max-w-7xl mx-auto px-8 py-12">
+      <div class="cyber-card p-8 sm:p-10 rounded-2xl">
+        <span class="text-xs uppercase tracking-widest text-[#f59e0b] font-bold font-mono">// EXECUTIVE_SUMMARY</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">Data Analytics & Decision-Driven Visualizations</h2>
+        <p class="text-slate-300 text-base leading-relaxed mt-4">
+          Computer Science student at Assiut National University with specialized training under the Digital Egypt Pioneers Initiative (DEPI). Skilled in cleaning raw datasets, building Star Schema relational models, writing custom DAX measures, and designing interactive Power BI dashboards that highlight Key Performance Indicators (KPIs) to drive executive decision-making.
+        </p>
+      </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="skills" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="max-w-2xl mb-10">
+        <h2 class="text-3xl font-extrabold text-white font-mono">// TECHNICAL_STACK</h2>
+        <p class="text-[#94a3b8] mt-2 text-sm">Core analytics capabilities, database querying, and logic foundations.</p>
+      </div>
+      
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">[BI]</div>
+          <h3 class="text-lg font-bold text-white mb-2">Power BI & Excel</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">Interactive Dashboards, Pivot Tables, DAX Calculations, KPI Cards, Slicers, Report Layouts.</p>
+        </div>
+
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">&lt;ETL&gt;</div>
+          <h3 class="text-lg font-bold text-white mb-2">Data Prep & Modeling</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">Power Query, M Code transformations, Star Schema Design, Data Cleaning, SQL Querying.</p>
+        </div>
+
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">{LOGIC}</div>
+          <h3 class="text-lg font-bold text-white mb-2">CS Foundation</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">C++ Programming, Object-Oriented Principles, Data Structures, Algorithmic Problem Solving.</p>
+        </div>
+
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">/*SOFT*/</div>
+          <h3 class="text-lg font-bold text-white mb-2">Soft Skills</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">Data Storytelling, Proposal Writing, Technical Documentation, Analytical Problem Solving.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics & BI Projects Grid -->
+    <section id="projects" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="mb-10">
+        <h2 class="text-3xl font-extrabold text-white font-mono">// FEATURED_DASHBOARDS</h2>
+        <p class="text-[#94a3b8] mt-2 text-sm">Real-world business intelligence dashboards, ETL workflows, and reporting models.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        
+        <!-- Project 1: Superstore Sales -->
+        <div class="cyber-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Power BI</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">DAX Modeling</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Superstore</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Superstore Sales & Profitability Dashboard</h3>
+            <p class="text-[#cbd5e1] text-sm leading-relaxed mb-4">
+              Transformed transactional retail data into an executive-level Power BI dashboard analyzing profit margins, regional sales growth, discount impacts, and sub-category performances.
+            </p>
+            <ul class="space-y-1.5 text-[#94a3b8] text-xs font-mono list-disc list-inside">
+              <li>Modeled Star Schema with specialized Date and Customer dimensions.</li>
+              <li>Calculated Profit Margins, YoY Growth, and Discount Loss metrics in DAX.</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#1e293b] flex justify-between items-center text-xs font-mono text-[#94a3b8]">
+            <span>POWER BI DASHBOARD</span>
+            <span class="text-[#f59e0b]">STATUS: COMPLETE</span>
+          </div>
+        </div>
+
+        <!-- Project 2: Pharmaceutical Sales Analytics -->
+        <div class="cyber-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Power Query</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Power BI</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Pharma Dataset</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Pharmaceutical Sales & Inventory Analytics</h3>
+            <p class="text-[#cbd5e1] text-sm leading-relaxed mb-4">
+              Processed and cleaned multi-channel pharmaceutical sales datasets (`pharma.xlsx`) using M code in Power Query to track regional product demand, pharmacy channel distribution, and sales trends.
+            </p>
+            <ul class="space-y-1.5 text-[#94a3b8] text-xs font-mono list-disc list-inside">
+              <li>Automated data cleaning, missing value imputation, and schema normalization.</li>
+              <li>Designed interactive drill-down slicers by region, class, and product line.</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#1e293b] flex justify-between items-center text-xs font-mono text-[#94a3b8]">
+            <span>POWER BI & M CODE</span>
+            <span class="text-[#f59e0b]">STATUS: COMPLETE</span>
+          </div>
+        </div>
+
+        <!-- Project 3: Titanic Analytics -->
+        <div class="cyber-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Power BI</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">DAX</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">EDA</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Titanic Passenger Survival Dashboard</h3>
+            <p class="text-[#cbd5e1] text-sm leading-relaxed mb-4">
+              Exploratory Data Analysis dashboard examining passenger demographics, class distribution, and family size impacts on survival rates.
+            </p>
+            <ul class="space-y-1.5 text-[#94a3b8] text-xs font-mono list-disc list-inside">
+              <li>Formulated custom DAX measures for survival percentages and cohort groups.</li>
+              <li>Built clean visual stories using custom color palettes and interactive slicers.</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#1e293b] flex justify-between items-center text-xs font-mono text-[#94a3b8]">
+            <span>DATA EXPLORATION</span>
+            <span class="text-[#f59e0b]">STATUS: COMPLETE</span>
+          </div>
+        </div>
+
+        <!-- Project 4: Retail Sales Management -->
+        <div class="cyber-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Excel</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Power Query</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">Pivot Tables</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Retail Sales Management Dashboard</h3>
+            <p class="text-[#cbd5e1] text-sm leading-relaxed mb-4">
+              Dynamic Excel mini-project dashboard tracking retail revenues, order counts, product performance, and monthly growth trends using automated ETL.
+            </p>
+            <ul class="space-y-1.5 text-[#94a3b8] text-xs font-mono list-disc list-inside">
+              <li>Cleaned messy raw sheets and combined data using Power Query.</li>
+              <li>Built custom Pivot Charts, timeline slicers, and dynamic KPI cards.</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#1e293b] flex justify-between items-center text-xs font-mono text-[#94a3b8]">
+            <span>EXCEL BI DASHBOARD</span>
+            <span class="text-[#f59e0b]">STATUS: COMPLETE</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Education & Badges -->
+    <section id="education" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="grid lg:grid-cols-2 gap-8">
+        
+        <!-- Academic Degree Card -->
+        <div class="cyber-card p-8 rounded-2xl">
+          <span class="text-xs uppercase font-mono text-[#f59e0b] font-bold block mb-2">// ACADEMIC_DEGREE</span>
+          <h3 class="text-xl font-bold text-white">B.Sc. in Computer Science</h3>
+          <p class="text-sm text-[#94a3b8] font-mono mt-1">Software Engineering — Assiut National University</p>
+          <div class="mt-6 p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center text-xs font-mono">
+            <span class="text-slate-300">Expected Graduation: 2029</span>
+            <span class="text-[#f59e0b] font-bold">GPA: 3.0 / 4.0</span>
+          </div>
+        </div>
+
+        <!-- DEPI & Certifications Card -->
+        <div class="cyber-card p-8 rounded-2xl">
+          <span class="text-xs uppercase font-mono text-[#f59e0b] font-bold block mb-2">// TRAINING_&_CREDENTIALS</span>
+          <h3 class="text-xl font-bold text-white">Data Analytics Track (DEPI)</h3>
+          <p class="text-sm text-[#94a3b8] font-mono mt-1">Digital Egypt Pioneers Initiative</p>
+          <p class="text-xs text-[#cbd5e1] mt-4 leading-relaxed">
+            Intensive 6-month specialized program focused on practical data modeling, ETL data pipelines, Power BI dashboard construction, and business analytics.
+          </p>
+          <div class="mt-4 pt-3 border-t border-[#1e293b] flex flex-wrap gap-3 text-xs font-mono text-[#f59e0b]">
+            <span class="bg-[#451a03]/50 px-2.5 py-1 rounded border border-[#b45309]/40">IBM Data Fundamentals</span>
+            <span class="bg-[#451a03]/50 px-2.5 py-1 rounded border border-[#b45309]/40">Oracle AI Credential</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer Contact -->
+    <footer id="contact" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="cyber-card p-10 rounded-2xl text-center">
+        <h2 class="text-2xl font-mono font-bold text-white">&lt;GET_IN_TOUCH /&gt;</h2>
+        <p class="text-[#94a3b8] text-sm mt-2 max-w-md mx-auto">
+          Need a detail-oriented Data Analyst to clean your data and build dynamic Power BI dashboards? Let’s connect!
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-4">
+          <a href="mailto:embabymahmoud541@gmail.com" class="px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-black font-mono font-bold text-xs rounded-lg transition">
+            embabymahmoud541@gmail.com
+          </a>
+          <a href="tel:+201093055947" class="px-6 py-3 cyber-card text-[#cbd5e1] font-mono text-xs rounded-lg transition">
+            (+20) 1093055947
+          </a>
+        </div>
+        <div class="mt-8 text-xs font-mono text-[#64748b]">
+          <span>Assiut, Egypt</span> • <a href="https://linkedin.com/in/mahmoud-embaby-b670393a4" target="_blank" class="hover:text-[#f59e0b] transition">LinkedIn Profile</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    window.addEventListener('load', () => {
+
+      // 1. Data Matrix Code Rain
+      const mCanvas = document.getElementById('matrix-canvas');
+      if (mCanvas) {
+        const mCtx = mCanvas.getContext('2d');
+        function resizeMatrix() {
+          mCanvas.width = window.innerWidth;
+          mCanvas.height = window.innerHeight;
+        }
+        resizeMatrix();
+        window.addEventListener('resize', resizeMatrix);
+
+        const chars = '01 POWERBI EXCEL SQL DAX POWERQUERY SUPERSTORE DEPI ANALYTICS KPI';
+        const fontSize = 13;
+        const columns = Math.floor(mCanvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+          mCtx.fillStyle = 'rgba(7, 10, 18, 0.08)';
+          mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+          mCtx.fillStyle = '#f59e0b';
+          mCtx.font = fontSize + 'px monospace';
+
+          for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
+              drops[i] = 0;
+            }
+            drops[i]++;
+          }
+          requestAnimationFrame(drawMatrix);
+        }
+        drawMatrix();
+      }
+
+      // 2. Light Ribbon Mouse Trail
+      const trailCanvas = document.getElementById('light-ribbon-canvas');
+      if (trailCanvas) {
+        const ctx = trailCanvas.getContext('2d');
+        let points = [];
+
+        function resizeTrail() {
+          trailCanvas.width = window.innerWidth;
+          trailCanvas.height = window.innerHeight;
+        }
+        resizeTrail();
+        window.addEventListener('resize', resizeTrail);
+
+        window.addEventListener('mousemove', (e) => {
+          points.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+        });
+
+        function drawRibbon() {
+          ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+          const now = Date.now();
+          points = points.filter(p => now - p.time < 350);
+
+          if (points.length > 2) {
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+
+            for (let i = 1; i < points.length; i++) {
+              const prev = points[i - 1];
+              const curr = points[i];
+              const ageRatio = (now - curr.time) / 350;
+              const opacity = Math.max(0, 1 - ageRatio);
+              const width = (1 - ageRatio) * 8 + 1;
+
+              ctx.beginPath();
+              ctx.moveTo(prev.x, prev.y);
+              ctx.lineTo(curr.x, curr.y);
+              ctx.strokeStyle = `rgba(245, 158, 11, ${opacity * 0.75})`;
+              ctx.lineWidth = width;
+              ctx.shadowBlur = 10;
+              ctx.shadowColor = 'rgba(245, 158, 11, 0.8)';
+              ctx.stroke();
+            }
+          }
+          requestAnimationFrame(drawRibbon);
+        }
+        drawRibbon();
+      }
+
+      // 3. Three.js Interactive 3D Data Cube
+      const canvas = document.getElementById('cube3dCanvas');
+      const container = document.getElementById('chart-container');
+
+      if (canvas && container && typeof THREE !== 'undefined') {
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        camera.position.set(0, 0, 6);
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+        function resize3D() {
+          const w = container.clientWidth || 300;
+          const h = container.clientHeight || 300;
+          renderer.setSize(w, h);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        resize3D();
+        window.addEventListener('resize', resize3D);
+
+        const cubeGroup = new THREE.Group();
+        scene.add(cubeGroup);
+
+        const outerGeo = new THREE.BoxGeometry(2, 2, 2);
+        const outerMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, wireframe: true });
+        const outerCube = new THREE.Mesh(outerGeo, outerMat);
+        cubeGroup.add(outerCube);
+
+        const innerGeo = new THREE.BoxGeometry(1, 1, 1);
+        const innerMat = new THREE.MeshStandardMaterial({ color: 0xea580c, transparent: true, opacity: 0.8 });
+        const innerCube = new THREE.Mesh(innerGeo, innerMat);
+        cubeGroup.add(innerCube);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xf59e0b, 2, 20);
+        pointLight.position.set(4, 4, 4);
+        scene.add(pointLight);
+
+        let isDragging = false;
+        let prevMouse = { x: 0, y: 0 };
+
+        canvas.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          prevMouse = { x: e.clientX, y: e.clientY };
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - prevMouse.x;
+          const dy = e.clientY - prevMouse.y;
+
+          cubeGroup.rotation.y += dx * 0.01;
+          cubeGroup.rotation.x += dy * 0.01;
+          prevMouse = { x: e.clientX, y: e.clientY };
+        });
+
+        function animate3D() {
+          requestAnimationFrame(animate3D);
+          if (!isDragging) {
+            cubeGroup.rotation.y += 0.008;
+            cubeGroup.rotation.x += 0.004;
+          }
+          renderer.render(scene, camera);
+        }
+        animate3D();
+        setTimeout(resize3D, 50);
+      }
+    });
+  </script>
+</body>
+</html>
